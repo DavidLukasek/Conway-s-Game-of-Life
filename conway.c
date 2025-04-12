@@ -8,6 +8,8 @@
 #define MAX_ITERATIONS 1000
 #define MAX_FPS 120
 
+//-------------------------------------------------------------
+
 int* getParams(void) {
     int* params = (int*)malloc(4*sizeof(int));
     if(params == NULL) {
@@ -44,8 +46,10 @@ int* getParams(void) {
     return params;
 }
 
-char** getCanvas(int width, int height) {
-    char** canvas = (char**)malloc(height*sizeof(char*));
+//-------------------------------------------------------------
+
+int** getCanvas(int width, int height) {
+    int** canvas = (int**)malloc(height*sizeof(int*));
     if(canvas == NULL) {
         fprintf(stderr, "ERROR: Memory allocation failed!\n");
         return NULL;
@@ -53,6 +57,19 @@ char** getCanvas(int width, int height) {
 
     //allocating memory for the inside of the canvas each line separately
     for(int i = 0; i < height; i++) {
-
+        canvas[i] = (int*)malloc(width*sizeof(int));
+        if(canvas[i] == NULL) {
+            fprintf(stderr, "ERROR: Memory allocation failed!\n");
+            return NULL;
+        }
     }
+
+    //filling the array with random 1s and 0s
+    for(int r = 0; r < height; r++) {
+        for(int c = 0; c < width; c++) {
+            canvas[r][c] = rand() % 2;
+        }
+    }
+
+    return canvas;
 }

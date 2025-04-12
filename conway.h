@@ -14,12 +14,13 @@
 int* getParams(void);
 
 /**
- * Allocates memory for the canvas and initializes it.
+ * Allocates memory for the canvas and initializes it randomly
+ * with 1s for live cells and 0s for dead cells.
  * @param width - width of the canvas
  * @param height - height of the canvas
- * @return Pointer to a 2D array of characters representing the canvas.
+ * @return Pointer to a 2D array of integers representing the canvas.
  *         The caller is responsible for freeing the memory.
  */
-char** getCanvas(int width, int height);
+int** getCanvas(int width, int height);
 
 #endif
