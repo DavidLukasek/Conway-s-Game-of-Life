@@ -7,6 +7,8 @@
 #define MAX_HEIGHT 100
 #define MAX_ITERATIONS 1000
 #define MAX_FPS 120
+#define LIVE_CELL '#'
+#define DEAD_CELL ' '
 
 //-------------------------------------------------------------
 
@@ -48,28 +50,87 @@ int* getParams(void) {
 
 //-------------------------------------------------------------
 
-int** getCanvas(int width, int height) {
-    int** canvas = (int**)malloc(height*sizeof(int*));
+Canvas_t* getCanvas(int width, int height) {
+    Canvas_t* canvas = (Canvas_t*)malloc(sizeof(Canvas_t));
     if(canvas == NULL) {
-        fprintf(stderr, "ERROR: Memory allocation failed!\n");
         return NULL;
     }
 
+    canvas->data = (int**)malloc(height*sizeof(int*));
+    if(canvas->data == NULL) {
+        return NULL;
+    }
+
+    canvas->width = width;
+    canvas->height = height;
+
     //allocating memory for the inside of the canvas each line separately
     for(int i = 0; i < height; i++) {
-        canvas[i] = (int*)malloc(width*sizeof(int));
-        if(canvas[i] == NULL) {
-            fprintf(stderr, "ERROR: Memory allocation failed!\n");
+        canvas->data[i] = (int*)malloc(width*sizeof(int));
+        if(canvas->data[i] == NULL) {
             return NULL;
         }
     }
 
-    //filling the array with random 1s and 0s
+    return canvas;
+}
+
+//-------------------------------------------------------------
+
+void fillCanvasRandom(Canvas_t* canvas) {
+    int width = canvas->width;
+    int height = canvas->height;
+
     for(int r = 0; r < height; r++) {
         for(int c = 0; c < width; c++) {
-            canvas[r][c] = rand() % 2;
+            canvas->data[r][c] = rand() % 2;
         }
     }
+}
 
-    return canvas;
+//-------------------------------------------------------------
+
+void freeCanvas(Canvas_t* canvas) {
+    int height = canvas->height;
+
+    for(int i = 0; i < height; i++) {
+        free(canvas->data[i]);
+    }
+    free(canvas->data);
+    free(canvas);
+}
+
+//-------------------------------------------------------------
+
+void printCanvas(Canvas_t* canvas) {
+    int width = canvas->width;
+    int height = canvas->height;
+
+    for(int r = 0; r < height; r++) {
+        for(int c = 0; c < width; c++) {
+            printf("%d ", canvas->data[r][c]);
+        }
+        putchar('\n');
+    }
+}
+
+//-------------------------------------------------------------
+
+void copyCanvas(Canvas_t* canvas, Canvas_t* copy) {
+    int width = canvas->width;
+    int height = canvas->height;
+
+    for(int r = 0; r < height; r++) {
+        for(int c = 0; c < width; c++) {
+            copy->data[r][c] = canvas->data[r][c];
+        }
+    }
+}
+
+//-------------------------------------------------------------
+
+int updateCanvas(int** canvas, int width, int height) {
+    int ret = 1;
+
+    return ret;
 }

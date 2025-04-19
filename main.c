@@ -6,6 +6,8 @@
 #define PARAM_ERR 101;
 #define MALLOC_ERR 102;
 
+//-------------------------------------------------------------
+
 int main(int argc, char *argv[]) {
   int ret = 0;
 
@@ -18,18 +20,40 @@ int main(int argc, char *argv[]) {
   
   int width = params[0];
   int height = params[1];
-  int fps = params[2];
+  //int fps = params[2];
   int iterations = params[3];
 
   //creating the game canvas
-  int** canvas = getCanvas(width, height);
+  Canvas_t* canvas = getCanvas(width, height);
   if(canvas == NULL) {
     fprintf(stderr, "ERROR: Memory allocation failed!");
     free(params);
     return MALLOC_ERR;
   }
+  fillCanvasRandom(canvas);
 
+  //creating the canvas copy for effective iterations
+  Canvas_t* copy = getCanvas(width, height);
+  if(copy == NULL) {
+    fprintf(stderr, "ERROR: Memory allocation failed!");
+    freeCanvas(canvas);
+    free(params);
+    return MALLOC_ERR;
+  }
+  copyCanvas(canvas, copy);
+
+  //printing the initial state of the canvas
+  printCanvas(canvas);
+
+  //running the simulation
+  for(int i = 0; i < iterations; i++) {
+
+  }
+  
+  freeCanvas(canvas);
+  freeCanvas(copy);
   free(params);
 
   return ret;
 }
+
