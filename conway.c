@@ -105,10 +105,12 @@ void freeCanvas(Canvas_t* canvas) {
 void printCanvas(Canvas_t* canvas) {
     int width = canvas->width;
     int height = canvas->height;
+    char symbol = ' ';
 
     for(int r = 0; r < height; r++) {
         for(int c = 0; c < width; c++) {
-            printf("%d ", canvas->data[r][c]);
+            symbol = canvas->data[r][c] ? LIVE_CELL : DEAD_CELL;
+            printf("%c ", symbol);
         }
         putchar('\n');
     }
@@ -129,8 +131,40 @@ void copyCanvas(Canvas_t* canvas, Canvas_t* copy) {
 
 //-------------------------------------------------------------
 
-int updateCanvas(int** canvas, int width, int height) {
-    int ret = 1;
+void updateCanvas(Canvas_t* canvas, Canvas_t* copy) {
+    int width = canvas->width;
+    int height = canvas->height;
+    int neighbors = 0;
 
-    return ret;
+    for(int r = 0; r < height; r++) {
+        for(int c = 0; c < width; c++) {
+            neighbors = countNeighbors(copy, r, c);
+            //todo - finish evaluation
+        }
+    }
+}
+
+//-------------------------------------------------------------
+
+int countNeighbors(Canvas_t* canvas, int row, int col) {
+    int count = 0;
+
+    int rowLowIndex = row - 1;
+    int rowHighIndex = row + 2;
+    int colLowIndex = col - 1;
+    int colHighIndex = col + 2;
+    int width = canvas->width;
+    int height = canvas->height;
+    int** data = canvas->data;
+
+    for(int r = rowLowIndex; r < rowHighIndex; r++) {
+        for(int c = colLowIndex; c < colHighIndex; c++) {
+            if(data[(r + height) % height][(c + width) % width]) count++;
+        }
+    }
+
+    //not counting itself
+    if(data[row][col]) count--;
+
+    return count;
 }

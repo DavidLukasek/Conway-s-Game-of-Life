@@ -58,6 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "*.rmd": "markdown",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "windows.h": "c"
   }
 }

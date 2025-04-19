@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "conway.h"
 
@@ -20,7 +21,7 @@ int main(int argc, char *argv[]) {
   
   int width = params[0];
   int height = params[1];
-  //int fps = params[2];
+  int fps = params[2];
   int iterations = params[3];
 
   //creating the game canvas
@@ -43,11 +44,13 @@ int main(int argc, char *argv[]) {
   copyCanvas(canvas, copy);
 
   //printing the initial state of the canvas
-  printCanvas(canvas);
+  //printCanvas(canvas);
 
   //running the simulation
   for(int i = 0; i < iterations; i++) {
-
+    updateCanvas(canvas, copy);
+    printCanvas(canvas);
+    sleep((int)1/fps);
   }
   
   freeCanvas(canvas);

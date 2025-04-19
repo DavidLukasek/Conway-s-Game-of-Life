@@ -57,11 +57,19 @@ void copyCanvas(Canvas_t* canvas, Canvas_t* copy);
 
 /**
  * Updates the canvas by applying the rules of Conway's Game of Life.
- * @param canvas - pointer to the 2D array representing the canvas
- * @param width - width of the canvas
- * @param height - height of the canvas
- * @return 0 on success, -1 on failure.
+ * @param canvas - pointer to the Canvas structure
+ * @param copy - pointer to the Canvas structure to copy into
  */
-int updateCanvas(int** canvas, int width, int height);
+void updateCanvas(Canvas_t* canvas, Canvas_t* copy);
+
+/**
+ * Counts the number of neighboring live cells in a 3x3 grid around the
+ * cell defined by the given coordinates, accounts for index looping
+ * @param canvas - pointer to the Canvas structure
+ * @param row - index of the row of the middle cell
+ * @param col - index of the collumn of the middle cell
+ * @return Number of live neighboring cells
+ */
+int countNeighbors(Canvas_t* canvas, int row, int col);
 
 #endif
