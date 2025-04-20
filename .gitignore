@@ -1,0 +1,15 @@
+# Ignore compiled files
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.class
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.cache
+*.txt
+
+.vscode/
