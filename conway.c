@@ -23,8 +23,8 @@ int* getParams(void) {
     printf("Please, enter canvas dimensions (up to %d x %d max):\n",
             MAX_WIDTH, MAX_HEIGHT);
     if(scanf("%d %d", &params[0], &params[1]) != 2 ||
-            params[0] < 1 || params[0] >= MAX_WIDTH ||
-            params[1] < 1 || params[1] >= MAX_HEIGHT) {
+            params[0] < 1 || params[0] > MAX_WIDTH ||
+            params[1] < 1 || params[1] > MAX_HEIGHT) {
         free(params);
         return NULL;
     }
@@ -107,10 +107,13 @@ void printCanvas(Canvas_t* canvas) {
     int height = canvas->height;
     char symbol = ' ';
 
+    //aesthetical separator
+    printf("\n\n\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n\n");
+
     for(int r = 0; r < height; r++) {
         for(int c = 0; c < width; c++) {
             symbol = canvas->data[r][c] ? LIVE_CELL : DEAD_CELL;
-            printf("%c ", symbol);
+            putchar(symbol);
         }
         putchar('\n');
     }
@@ -139,7 +142,26 @@ void updateCanvas(Canvas_t* canvas, Canvas_t* copy) {
     for(int r = 0; r < height; r++) {
         for(int c = 0; c < width; c++) {
             neighbors = countNeighbors(copy, r, c);
-            //todo - finish evaluation
+            /*printf("Cell %d %d has %d neighbors.\n", r, c, neighbors);
+            switch(neighbors) {
+                case 2:
+                    break;
+                case 3:
+                    canvas->data[r][c] = 1;
+                default:
+                    canvas->data[r][c] = 0;
+            }*/
+
+            if(canvas->data[r][c]) {
+                if(neighbors < 2 || neighbors > 3) {
+                    canvas->data[r][c] = 0;
+                }
+            } else {
+                if(neighbors == 3) {
+                    canvas->data[r][c] = 1;
+                }
+            }
+            neighbors = 0;
         }
     }
 }

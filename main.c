@@ -7,6 +7,8 @@
 #define PARAM_ERR 101;
 #define MALLOC_ERR 102;
 
+#define MICROSECONDS 1000000
+
 //-------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
@@ -44,13 +46,14 @@ int main(int argc, char *argv[]) {
   copyCanvas(canvas, copy);
 
   //printing the initial state of the canvas
-  //printCanvas(canvas);
+  printCanvas(canvas);
 
   //running the simulation
   for(int i = 0; i < iterations; i++) {
     updateCanvas(canvas, copy);
     printCanvas(canvas);
-    sleep((int)1/fps);
+    copyCanvas(canvas, copy);
+    usleep((int)MICROSECONDS/fps);
   }
   
   freeCanvas(canvas);
