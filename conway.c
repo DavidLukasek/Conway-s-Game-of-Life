@@ -27,7 +27,7 @@ int* getParams(void) {
             params[1] < 1 || params[1] > MAX_HEIGHT) {
         free(params);
         return NULL;
-    }
+    }     
 
     //getting the simulation rate (FPS)
     printf("Please, enter simulation rate (up to %d max):\n", MAX_FPS);
@@ -142,15 +142,6 @@ void updateCanvas(Canvas_t* canvas, Canvas_t* copy) {
     for(int r = 0; r < height; r++) {
         for(int c = 0; c < width; c++) {
             neighbors = countNeighbors(copy, r, c);
-            /*printf("Cell %d %d has %d neighbors.\n", r, c, neighbors);
-            switch(neighbors) {
-                case 2:
-                    break;
-                case 3:
-                    canvas->data[r][c] = 1;
-                default:
-                    canvas->data[r][c] = 0;
-            }*/
 
             if(canvas->data[r][c]) {
                 if(neighbors < 2 || neighbors > 3) {

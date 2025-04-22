@@ -1,6 +1,12 @@
 #ifndef CONWAY_H
 #define CONWAY_H
 
+/**
+ * Structure representing the canvas.
+ * Data should contain a 2-dimensional array
+ * of 1s and 0s with dimensions given by the
+ * width and height parameters
+ */
 typedef struct Canvas_t {
     int** data;
     int width;
